@@ -1,14 +1,12 @@
 {
-  "name": "minecraft-bot",
+  "name": "bedrock-bot",
   "version": "1.0.0",
-  "description": "بوت ماينكرافت Bedrock",
   "main": "bot.js",
   "type": "module",
   "scripts": {
     "start": "node bot.js"
   },
   "dependencies": {
-    "bedrock-protocol": "^3.49.0",
-    "raknet-native": "^0.2.0"
+    "bedrock-protocol": "^3.36.0"
   }
 }
