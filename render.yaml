@@ -1,7 +1,9 @@
 services:
   - type: web
     name: minecraft-bot
-    env: docker
+    env: node
     plan: free
-    dockerfilePath: ./Dockerfile
+    region: oregon
+    buildCommand: ""
+    startCommand: "node bot.js"
     autoDeploy: true
