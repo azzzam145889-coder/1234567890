@@ -1,15 +1,18 @@
-# استخدم صورة Node.js رسمية
-FROM node:22
+# استخدم Node 20
+FROM node:20
 
-# أنشئ مجلد العمل داخل الحاوية
-WORKDIR /usr/src/app
+# تثبيت أدوات البناء
+RUN apt-get update && apt-get install -y make g++ cmake python3
 
-# انسخ ملفات المشروع (بدون node_modules)
-COPY package*.json ./
-COPY bot.js ./
+# إنشاء مجلد العمل
+WORKDIR /app
 
-# ثبّت الحزم
-RUN npm install
+# نسخ الملفات
+COPY package.json package-lock.json* ./
+COPY . .
 
-# شغّل البوت عند بدء الحاوية
+# تثبيت الحزم
+RUN npm install && npm rebuild raknet-native --build-from-source
+
+# تشغيل البوت
 CMD ["npm", "start"]
