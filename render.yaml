@@ -1,6 +1,9 @@
 services:
   - type: web
-    name: bedrock-bot
+    name: minecraft-bot
     env: docker
     plan: free
-    autoDeploy: true
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: NODE_ENV
+        value: production
