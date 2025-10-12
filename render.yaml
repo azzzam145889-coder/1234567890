@@ -1,6 +1,7 @@
 services:
   - type: web
-    name: bedrock-bot
-    env: docker
+    name: minecraft-bot
+    env: node
     plan: free
-    autoDeploy: true
+    buildCommand: "docker build -t minecraft-bot ."
+    startCommand: "docker run minecraft-bot"
