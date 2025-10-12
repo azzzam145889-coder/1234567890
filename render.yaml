@@ -1,7 +1,7 @@
 services:
   - type: web
     name: minecraft-bot
-    env: node
+    env: docker
     plan: free
-    buildCommand: "docker build -t minecraft-bot ."
-    startCommand: "docker run minecraft-bot"
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
