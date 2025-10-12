@@ -1,24 +1,22 @@
 import { createClient } from 'bedrock-protocol';
 
-const client = createClient({
-  host: 'emerald.magmanode.com',  // عنوان السيرفر
-  port: 33760,                     // المنفذ
-  username: 'BotUsername',         // ضع اسم البوت هنا
-  version: '1.20.10'               // عدّل حسب نسخة السيرفر
-});
+async function startBot() {
+  try {
+    const client = createClient({
+      host: 'emerald.magmanode.com',
+      port: 33760,
+      username: 'RenderBot',
+      offline: false
+    });
 
-client.on('connect', () => {
-  console.log('تم الاتصال بالسيرفر!');
-});
+    client.on('join', () => console.log('✅ البوت دخل السيرفر بنجاح!'));
+    client.on('disconnect', () => console.log('⚠️ تم قطع الاتصال من السيرفر.'));
+    client.on('error', (err) => console.log('❌ خطأ في الاتصال:', err.message));
+  } catch (err) {
+    console.log('🚫 فشل إنشاء الاتصال:', err.message);
+  }
+}
 
-client.on('spawn', () => {
-  console.log('البوت ظهر في العالم!');
-});
-
-client.on('message', (packet) => {
-  console.log(`رسالة من السيرفر: ${packet.message}`);
-});
-
-client.on('disconnect', (packet) => {
-  console.log(`تم قطع الاتصال: ${packet.reason}`);
-});
+// إعادة المحاولة كل 5 دقائق بدون توقف السيرفر
+startBot();
+setInterval(startBot, 5 * 60 * 1000);
