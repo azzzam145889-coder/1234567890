@@ -1,11 +1,6 @@
 services:
   - type: web
-    name: minecraft-bot
-    env: node
+    name: bedrock-bot
+    env: docker
     plan: free
-    buildCommand: npm install
-    startCommand: node bot.js
-    envVars:
-      - key: BOT_TOKEN
-        fromDatabase: false
-        value: "ضع التوكن هنا إذا لزم"
+    autoDeploy: true
