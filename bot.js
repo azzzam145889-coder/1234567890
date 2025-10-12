@@ -1,28 +1,25 @@
-import { createClient } from "bedrock-protocol";
+import pkg from 'bedrock-protocol';
+const { createBot } = pkg;
 
-// إعدادات البوت
-const client = createClient({
-  host: "emerald.magmanode.com",  // سيرفر ماينكرافت
-  port: 33760,                    // البورت
-  username: "BotAFK",             // اسم البوت
-  offline: true                   // وضع Offline Mode
+const bot = createBot({
+    host: 'emerald.magmanode.com', // السيرفر
+    port: 33760,                   // البورت
+    username: 'BotUsername',       // اسم البوت
+    offline: true                  // إذا كان السيرفر بدون حساب مايكروسوفت
 });
 
-// عند اتصال البوت بالسيرفر
-client.on("connect", () => {
-  console.log("✅ تم الاتصال بالسيرفر بنجاح!");
+bot.on('spawn', () => {
+    console.log('✅ تم دخول البوت للسيرفر!');
 });
 
-// عند استقبال رسالة من السيرفر
-client.on("text", (packet) => {
-  console.log("💬 رسالة من السيرفر:", packet.message);
+bot.on('message', (message) => {
+    console.log('رسالة:', message.toString());
 });
 
-// عند حدوث خطأ
-client.on("error", (err) => {
-  console.error("❌ حدث خطأ:", err);
+bot.on('kicked', (reason) => {
+    console.log('⚠️ تم طرد البوت:', reason.toString());
 });
 
-// عند فصل الاتصال
-client.on("disconnect", (packet) => {
-  console.log("⚠️ تم قطع
+bot.on('error', (err) => {
+    console.error('❌ خطأ:', err);
+});
