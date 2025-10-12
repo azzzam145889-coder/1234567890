@@ -1,25 +1,23 @@
-import pkg from 'bedrock-protocol';
-const { createBot } = pkg;
+import { createBot } from 'bedrock-protocol';
 
 const bot = createBot({
-    host: 'emerald.magmanode.com', // السيرفر
-    port: 33760,                   // البورت
-    username: 'BotUsername',       // اسم البوت
-    offline: true                  // إذا كان السيرفر بدون حساب مايكروسوفت
+  host: 'localhost', // ضع هنا عنوان السيرفر
+  port: 19132,       // منفذ السيرفر
+  username: 'BotName' // اسم البوت
 });
 
 bot.on('spawn', () => {
-    console.log('✅ تم دخول البوت للسيرفر!');
+  console.log('البوت دخل السيرفر بنجاح!');
 });
 
-bot.on('message', (message) => {
-    console.log('رسالة:', message.toString());
-});
-
-bot.on('kicked', (reason) => {
-    console.log('⚠️ تم طرد البوت:', reason.toString());
+bot.on('message', (packet) => {
+  console.log(`[Message]: ${packet.message}`);
 });
 
 bot.on('error', (err) => {
-    console.error('❌ خطأ:', err);
+  console.error('حدث خطأ:', err);
+});
+
+bot.on('end', () => {
+  console.log('تم فصل البوت عن السيرفر.');
 });
