@@ -1,17 +1,13 @@
 {
   "name": "minecraft-bot",
   "version": "1.0.0",
-  "description": "بوت ماينكرافت Bedrock على Render",
+  "description": "Minecraft Bedrock bot for Render",
   "main": "bot.js",
   "type": "module",
   "scripts": {
     "start": "node bot.js"
   },
   "dependencies": {
-    "bedrock-protocol": "git+https://github.com/PrismarineJS/bedrock-protocol.git",
-    "raknet-native": "^0.2.0"
-  },
-  "engines": {
-    "node": ">=18"
+    "bedrock-protocol": "^1.21.0"
   }
 }
