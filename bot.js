@@ -1,23 +1,24 @@
-import { createBot } from 'bedrock-protocol';
+import { createClient } from 'bedrock-protocol';
 
-const bot = createBot({
-  host: 'localhost', // ضع هنا عنوان السيرفر
-  port: 19132,       // منفذ السيرفر
-  username: 'BotName' // اسم البوت
+const client = createClient({
+  host: 'emerald.magmanode.com',  // عنوان السيرفر
+  port: 33760,                     // المنفذ
+  username: 'BotUsername',         // ضع اسم البوت هنا
+  version: '1.20.10'               // عدّل حسب نسخة السيرفر
 });
 
-bot.on('spawn', () => {
-  console.log('البوت دخل السيرفر بنجاح!');
+client.on('connect', () => {
+  console.log('تم الاتصال بالسيرفر!');
 });
 
-bot.on('message', (packet) => {
-  console.log(`[Message]: ${packet.message}`);
+client.on('spawn', () => {
+  console.log('البوت ظهر في العالم!');
 });
 
-bot.on('error', (err) => {
-  console.error('حدث خطأ:', err);
+client.on('message', (packet) => {
+  console.log(`رسالة من السيرفر: ${packet.message}`);
 });
 
-bot.on('end', () => {
-  console.log('تم فصل البوت عن السيرفر.');
+client.on('disconnect', (packet) => {
+  console.log(`تم قطع الاتصال: ${packet.reason}`);
 });
