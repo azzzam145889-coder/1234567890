@@ -1,41 +1,68 @@
-// 📦 استيراد مكتبة bedrock-protocol
 import { createClient } from 'bedrock-protocol';
 import http from 'http';
 
-// 🟢 دالة تشغيل البوت
+const BOT_NAME = 'FUCK YOU2';
+const HOST = 'emerald.magmanode.com';
+const PORT_SERVER = 33760;
+
 async function startBot() {
   try {
     const client = createClient({
-      host: 'emerald.magmanode.com', // عنوان السيرفر
-      port: 33760,                   // رقم المنفذ
-      username: 'RenderBot',         // اسم البوت
-      offline: false
+      host: HOST,
+      port: PORT_SERVER,
+      username: BOT_NAME,
+      offline: true
     });
 
-    client.on('join', () => console.log('✅ البوت دخل السيرفر بنجاح!'));
-    client.on('disconnect', () => {
-      console.log('⚠️ تم قطع الاتصال من السيرفر. إعادة المحاولة...');
-      setTimeout(startBot, 3000); // ⏳ إعادة المحاولة بعد 3 ثوانٍ
+    client.on('join', () => {
+      console.log(`✅ البوت "${BOT_NAME}" دخل السيرفر بنجاح!`);
+
+      // 📝 إرسال رسالة تلقائية في الشات كل 5 دقائق
+      setInterval(() => {
+        if (client && client.sendMessage) {
+          client.sendMessage('البوت لا يزال يعمل ✅');
+        }
+      }, 5 * 60 * 1000);
     });
+
+    client.on('disconnect', () => {
+      console.log('⚠️ تم قطع الاتصال من السيرفر. إعادة المحاولة بعد 3 ثواني...');
+      setTimeout(startBot, 3000);
+    });
+
     client.on('error', (err) => {
       console.log('❌ خطأ في الاتصال:', err.message);
-      setTimeout(startBot, 3000); // ⏳ إعادة المحاولة بعد 3 ثوانٍ في حال الخطأ
+      setTimeout(startBot, 3000);
     });
   } catch (err) {
     console.log('🚫 فشل إنشاء الاتصال:', err.message);
-    setTimeout(startBot, 3000); // ⏳ إعادة المحاولة بعد 3 ثوانٍ في حال فشل غير متوقع
+    setTimeout(startBot, 3000);
   }
 }
 
-// 🔁 تشغيل البوت لأول مرة
 startBot();
 
-// 🌍 خادم HTTP لإبقاء البوت شغال في Render
-const PORT = process.env.PORT || 3000;
-
-http.createServer((req, res) => {
+const PORT_HTTP = process.env.PORT || 3000;
+const server = http.createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
   res.end('✅ Bot is alive and running on Render!');
-}).listen(PORT, () => {
-  console.log(`🌐 HTTP server running on port ${PORT}`);
 });
+
+server.listen(PORT_HTTP, () => {
+  console.log(`🌐 HTTP server running on port ${PORT_HTTP}`);
+});
+
+// 🔄 إبقاء السيرفر في MagmaNode شغال 24/7
+setInterval(() => {
+  http.get('https://zero987654321-df0r.onrender.com', (res) => {
+    console.log(`💓 Ping sent to keep Render alive (${res.statusCode})`);
+  }).on('error', (err) => {
+    console.log('⚠️ خطأ أثناء إرسال Ping:', err.message);
+  });
+
+  http.get('https://emerald.magmanode.com', (res) => {
+    console.log(`💎 Ping sent to MagmaNode (${res.statusCode})`);
+  }).on('error', (err) => {
+    console.log('⚠️ خطأ أثناء Ping إلى MagmaNode:', err.message);
+  });
+}, 5 * 60 * 1000);
