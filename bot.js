@@ -65,4 +65,4 @@ setInterval(() => {
   }).on('error', (err) => {
     console.log('⚠️ خطأ أثناء Ping إلى MagmaNode:', err.message);
   });
-}, 30 * 60 * 1000);
+}, 10 * 60 * 1000);
