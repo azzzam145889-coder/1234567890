@@ -22,7 +22,7 @@ async function startBot() {
         if (client && client.sendMessage) {
           client.sendMessage('البوت لا يزال يعمل ✅');
         }
-      }, 5 * 60 * 1000);
+      }, 10 * 60 * 1000);
     });
 
     client.on('disconnect', () => {
