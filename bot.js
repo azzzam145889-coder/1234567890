@@ -2,8 +2,8 @@ import { createClient } from 'bedrock-protocol';
 import http from 'http';
 
 const BOT_NAME = 'ZolDekRonder_1326';
-const HOST = 'emerald.magmanode.com';
-const PORT_SERVER = 33760;
+const HOST = 'scar.progamer.me';
+const PORT_SERVER = 32423;
 
 async function startBot() {
   try {
